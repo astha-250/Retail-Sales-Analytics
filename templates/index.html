@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retail Sales Analytics Dashboard</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <header class="mb-8 border-b border-slate-800 pb-4">
+            <h1 class="text-3xl font-bold text-emerald-400">Retail Sales Analytics Dashboard</h1>
+            <p class="text-slate-400 text-sm mt-1">Exploratory Data Analysis & Machine Learning Dashboard</p>
+        </header>
+
+        <!-- KPI Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl">
+                <p class="text-slate-400 text-xs font-semibold uppercase">Total Sales</p>
+                <h2 id="kpi-sales" class="text-2xl font-bold text-emerald-400 mt-2">$0.00</h2>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl">
+                <p class="text-slate-400 text-xs font-semibold uppercase">Total Profit</p>
+                <h2 id="kpi-profit" class="text-2xl font-bold text-blue-400 mt-2">$0.00</h2>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl">
+                <p class="text-slate-400 text-xs font-semibold uppercase">Total Orders</p>
+                <h2 id="kpi-orders" class="text-2xl font-bold text-indigo-400 mt-2">0</h2>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl">
+                <p class="text-slate-400 text-xs font-semibold uppercase">Return Rate</p>
+                <h2 id="kpi-returns" class="text-2xl font-bold text-rose-400 mt-2">0%</h2>
+            </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl h-80">
+                <h3 class="text-lg font-semibold mb-2 text-slate-200">Monthly Revenue & Profit Trend</h3>
+                <div class="relative h-64 w-full">
+                    <canvas id="salesTrendChart"></canvas>
+                </div>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl h-80">
+                <h3 class="text-lg font-semibold mb-2 text-slate-200">Category Performance</h3>
+                <div class="relative h-64 w-full">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl lg:col-span-1 h-80">
+                <h3 class="text-lg font-semibold mb-2 text-slate-200">Customer Segments</h3>
+                <div class="relative h-64 w-full flex justify-center">
+                    <canvas id="segmentChart"></canvas>
+                </div>
+            </div>
+
+            <!-- ML Predictor Form -->
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl lg:col-span-2">
+                <h3 class="text-lg font-semibold mb-4 text-emerald-400">Sales Prediction Engine</h3>
+                <form id="predictForm" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Quantity</label>
+                        <input type="number" id="predQuantity" value="5" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Unit Price ($)</label>
+                        <input type="number" id="predUnitPrice" value="120" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Discount (%)</label>
+                        <input type="number" id="predDiscount" value="10" class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white">
+                    </div>
+                    <button type="button" onclick="makePrediction()" class="md:col-span-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-2 rounded transition">
+                        Calculate Prediction
+                    </button>
+                </form>
+
+                <div id="predResult" class="mt-6 hidden p-4 bg-slate-800/60 border border-slate-700 rounded-lg">
+                    <p class="text-slate-300">Predicted Sales: <span id="resSales" class="font-bold text-emerald-400"></span></p>
+                    <p class="text-slate-300">Estimated Profit: <span id="resProfit" class="font-bold text-blue-400"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Script -->
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>
