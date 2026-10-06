@@ -36,7 +36,7 @@
             </div>
         </div>
 
-        <!-- Charts Grid -->
+        <!-- Charts Row 1: Sales Trend & Category Performance -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
             <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl h-80">
                 <h3 class="text-lg font-semibold mb-2 text-slate-200">Monthly Revenue & Profit Trend</h3>
@@ -45,13 +45,93 @@
                 </div>
             </div>
             <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl h-80">
-                <h3 class="text-lg font-semibold mb-2 text-slate-200">Category Performance</h3>
+                <h3 class="text-lg font-semibold mb-2 text-slate-200">Category Performance (Sales & Profit)</h3>
                 <div class="relative h-64 w-full">
                     <canvas id="categoryChart"></canvas>
                 </div>
             </div>
         </div>
 
+        <!-- Charts Row 2: Top Products & Regional Sales -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl h-80">
+                <h3 class="text-lg font-semibold mb-2 text-slate-200">Top 10 Products by Sales</h3>
+                <div class="relative h-64 w-full">
+                    <canvas id="topProductsChart"></canvas>
+                </div>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl h-80">
+                <h3 class="text-lg font-semibold mb-2 text-slate-200">Sales by Region</h3>
+                <div class="relative h-64 w-full">
+                    <canvas id="regionChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Correlation Heatmap Section -->
+        <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl mb-8">
+            <h3 class="text-lg font-semibold mb-4 text-slate-200">Feature Correlation Matrix</h3>
+            <div id="heatmap-container" class="overflow-x-auto">
+                <!-- Rendered dynamically by JS -->
+            </div>
+        </div>
+
+        <!-- Sales Outliers Section -->
+        <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-slate-200">Sales Outliers Analysis</h3>
+                <span id="outlier-badge" class="px-3 py-1 text-xs font-semibold rounded-full bg-rose-500/20 text-rose-400 border border-rose-500/30">
+                    Detecting...
+                </span>
+            </div>
+            
+            <!-- Stat Summary Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-4 text-center">
+                <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-800">
+                    <p class="text-xs text-slate-400">Q1 (25%)</p>
+                    <p id="outlier-q1" class="text-sm font-semibold text-slate-200">$0</p>
+                </div>
+                <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-800">
+                    <p class="text-xs text-slate-400">Median (50%)</p>
+                    <p id="outlier-median" class="text-sm font-semibold text-emerald-400">$0</p>
+                </div>
+                <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-800">
+                    <p class="text-xs text-slate-400">Q3 (75%)</p>
+                    <p id="outlier-q3" class="text-sm font-semibold text-slate-200">$0</p>
+                </div>
+                <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-800">
+                    <p class="text-xs text-slate-400">Upper Threshold</p>
+                    <p id="outlier-threshold" class="text-sm font-semibold text-amber-400">$0</p>
+                </div>
+                <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-800">
+                    <p class="text-xs text-slate-400">Max Sales Value</p>
+                    <p id="outlier-max" class="text-sm font-semibold text-rose-400">$0</p>
+                </div>
+            </div>
+
+            <!-- Boxplot Canvas -->
+            <div class="h-48 relative">
+                <canvas id="outliersChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Product Performance: Sales vs Profit Chart -->
+        <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl mb-8">
+            <h3 class="text-lg font-semibold text-slate-200 mb-4">Product Performance: Sales vs Profit</h3>
+            <div class="h-80 relative">
+                <canvas id="productPerformanceChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Top 10 Products by Return Rate -->
+    <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl mb-8">
+        <h3 class="text-lg font-semibold text-slate-200 mb-4">Top 10 Products by Return Rate</h3>
+        <div class="h-80 relative">
+            <canvas id="topReturnProductsChart"></canvas>
+        </div>
+    </div>
+
+        <!-- Row 3: Customer Segments & ML Predictor -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl lg:col-span-1 h-80">
                 <h3 class="text-lg font-semibold mb-2 text-slate-200">Customer Segments</h3>
@@ -60,7 +140,6 @@
                 </div>
             </div>
 
-            <!-- ML Predictor Form -->
             <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl lg:col-span-2">
                 <h3 class="text-lg font-semibold mb-4 text-emerald-400">Sales Prediction Engine</h3>
                 <form id="predictForm" class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -90,6 +169,6 @@
     </div>
 
     <!-- Dashboard Script -->
-    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    <script src="/static/js/dashboard.js"></script>
 </body>
 </html>
